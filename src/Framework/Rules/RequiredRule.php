@@ -8,12 +8,12 @@ use Framework\Contracts\RuleInterface;
 
 class RequiredRule implements RuleInterface
 {
-    public function validate(array $data , string $filed , array $params) : bool
+    public function validate(array $data , string $field , array $params) : bool
     {
-        return !empty($data[$filed]);
+        return !empty($data[$field]);
     }
     
-    public function getMessage(array $data , string $filed , array $params) : string 
+    public function getMessage(array $data , string $field , array $params) : string 
     {
         return "This field is required.";
     }

@@ -11,27 +11,26 @@ class Validator
 {
     private array $rules = [];
 
-    public function add(string $alias , RuleInterface $rule)
+    public function add(string $alias, RuleInterface $rule)
     {
         $this->rules[$alias] = $rule;
     }
 
-    public function validate(array $formData , array $fields)
+    public function validate(array $formData, array $fields)
     {
         $errors = [];
 
-        foreach ($fields as $fieldName => $rules){
-            foreach($rules as $rule)
-            {
+        foreach ($fields as $fieldName => $rules) {
+            foreach ($rules as $rule) {
                 $ruleParams = [];
-                if(str_contains($rule ,':')){
+                if (str_contains($rule, ':')) {
 
-                    [$rule , $ruleParams] = explode(':', $rule);
+                    [$rule, $ruleParams] = explode(':', $rule);
                     $ruleParams = explode(',', $ruleParams);
                 }
                 $ruleValidator = $this->rules[$rule];
 
-                if($ruleValidator->validate($formData, $fieldName , $ruleParams)){
+                if ($ruleValidator->validate($formData, $fieldName, $ruleParams)) {
 
                     continue;
                 }
@@ -42,11 +41,12 @@ class Validator
                     $ruleParams
                 );
             }
-
         }
 
-        if(count($errors))
-        {
+        if (count($errors)) {
+            echo '<pre>';
+            print_r($errors);
+            echo '</pre>';
             throw new ValidationException($errors);
         }
     }
